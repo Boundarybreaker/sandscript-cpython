@@ -65,7 +65,7 @@ public class PythonScriptEngineFactory implements ScriptEngineFactory {
 
     @Override
     public List<String> getExtensions() {
-        return Arrays.asList("cpy");
+        return Arrays.asList("py", "cpy");
     }
 
     @Override

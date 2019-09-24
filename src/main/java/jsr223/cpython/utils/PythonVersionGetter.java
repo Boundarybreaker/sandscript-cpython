@@ -32,16 +32,12 @@ import org.apache.log4j.Logger;
 import jsr223.cpython.processbuilder.PythonProcessBuilderFactory;
 import jsr223.cpython.processbuilder.SingletonPythonProcessBuilderFactory;
 import jsr223.cpython.processbuilder.Utils.PythonProcessBuilderUtilities;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 
 /**
  * @author ActiveEon Team
  * @since 04/10/2017
  */
-@NoArgsConstructor
-@AllArgsConstructor
 public class PythonVersionGetter {
 
     private static final Logger log = Logger.getLogger(PythonVersionGetter.class);
@@ -50,9 +46,18 @@ public class PythonVersionGetter {
 
     private final String PYTHON_VERSION_COMMAND = "--version"; // this command is needed to retrieve only specific string with python version
 
-    private PythonProcessBuilderFactory factory = SingletonPythonProcessBuilderFactory.getInstance();
+    private PythonProcessBuilderFactory factory;
 
-    private PythonProcessBuilderUtilities processBuilderUtilities = new PythonProcessBuilderUtilities();
+    private PythonProcessBuilderUtilities processBuilderUtilities;
+
+    public PythonVersionGetter() {
+        this(SingletonPythonProcessBuilderFactory.getInstance(), new PythonProcessBuilderUtilities());
+    }
+
+    public PythonVersionGetter(PythonProcessBuilderFactory factory, PythonProcessBuilderUtilities utilities) {
+        this.factory = factory;
+        this.processBuilderUtilities = utilities;
+    }
 
     /**
      * Retrieves the Python version

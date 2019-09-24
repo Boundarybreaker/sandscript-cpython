@@ -109,3 +109,7 @@ ehthumbs_vista.db
 Desktop.ini
 
 # Created by .ignore support plugin (hsz.mobi)
+
+# MC-specific stuff
+Minecraft
+run
