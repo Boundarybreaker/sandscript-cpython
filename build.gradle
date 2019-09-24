@@ -8,13 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        // Code Formatting dependencies
         classpath "com.github.jengelman.gradle.plugins:shadow:5.0.0"
-        classpath "com.diffplug.gradle.spotless:spotless:2.4.0"
-        classpath "org.ow2.proactive:coding-rules:1.0.0"
-        delete "gradle/ext"
-        ant.unjar src: configurations.classpath.find { it.name.startsWith("coding-rules") }, dest: 'gradle/ext'
-        // END code formatting dependencies
     }
 }
 
@@ -26,15 +20,9 @@ apply plugin: "com.github.johnrengelman.shadow"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// Configure the maven repository deployment
-install {
-    repositories.mavenInstaller {
-        // Set the version
-        pom.version = version
-        // Set the group/namespace for the maven repository deployment.
-        pom.groupId = 'jsr223'
-    }
-}
+maven_group = 'space.bbkr'
+archivesBaseName = 'sandscript-cpython'
+version = '0.1.6'
 
 configurations {
     provided
@@ -61,17 +49,29 @@ repositories {
     }
 }
 
-apply from: "$rootDir/gradle/ext/coding-format.gradle"
-
 dependencies {
     runtime project(':Minecraft')
     compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1'
     compile 'log4j:log4j:1.2.17'
     compile 'com.google.guava:guava:19.0'
-    provided 'org.ow2.proactive:scheduler-api:+'
+    provided 'org.ow2.proactive:scheduler-api:10.1.0-SNAPSHOT'
 
     compile 'com.hrznstudio.sandbox:sandbox-api:+'
 
-    shadow 'org.ow2.proactive:scheduler-api:+'
-    shadow group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1'
+    shadow ('org.ow2.proactive:scheduler-api:10.1.0-SNAPSHOT') {transitive=false}
+    shadow (group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1') {transitive=false}
+}
+
+jar {
+    from 'LICENSE'
+    classifier = 'slim'
+    dependsOn shadowJar
+    archiveExtension = 'sbx'
+}
+
+shadowJar {
+    classifier = ''
+
+    configurations = [project.configurations.shadow]
+    extension = 'sbx'
 }

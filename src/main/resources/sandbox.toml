@@ -1,5 +1,5 @@
 modid="sandscript-cpy" # required `[a-z0-9-_]{4,15}`
-version="0.0.0" # required Semver Enforced!
+version="0.1.6" # required Semver Enforced!
 title="SandScript - CPython" # optional DEFAULT: modid
 description="""
 Native python support for SandScript.
