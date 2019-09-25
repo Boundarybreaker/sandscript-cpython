@@ -1,21 +1,10 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
-            url "http://repository.activeeon.com/content/groups/proactive/"
-        }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:5.0.0"
-    }
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
-
-apply plugin: 'java'
-// For buildscript -> repositories -> maven
-apply plugin: 'maven'
-apply plugin: "com.github.johnrengelman.shadow"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -51,12 +40,12 @@ repositories {
 
 dependencies {
     runtime project(':Minecraft')
-    compile group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1'
-    compile 'log4j:log4j:1.2.17'
-    compile 'com.google.guava:guava:19.0'
+    api group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1'
+    api 'log4j:log4j:1.2.17'
+    api 'com.google.guava:guava:19.0'
     provided 'org.ow2.proactive:scheduler-api:10.1.0-SNAPSHOT'
 
-    compile 'com.hrznstudio.sandbox:sandbox-api:+'
+    api 'com.hrznstudio.sandbox:sandbox-api:+'
 
     shadow ('org.ow2.proactive:scheduler-api:10.1.0-SNAPSHOT') {transitive=false}
     shadow (group: 'net.sf.py4j', name: 'py4j', version: '0.10.8.1') {transitive=false}
